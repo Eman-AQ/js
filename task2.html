@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .student {
+            border: 1px solid #333;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .top {
+            background-color: #d4edda;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Students Information</h1>
+    <div id="studentsContainer"></div>
+
+    <script>
+
+        const students = [
+            { name: "Ali", age: 20, gpa: 95, isGraduated: false },
+            { name: "Sara", age: 22, gpa: 85, isGraduated: true },
+            { name: "Omar", age: 21, gpa: 60, isGraduated: false }
+        ];
+
+        const container = document.getElementById("studentsContainer");
+        let highestGPA = -1;
+
+        for (const student of students) {
+
+            const studentDiv = document.createElement("div");
+            studentDiv.classList.add("student");
+
+
+            studentDiv.innerHTML = `
+                <strong>Name:</strong> ${student.name} <br>
+                <strong>Age:</strong> ${student.age} <br>
+                <strong>GPA:</strong> ${student.gpa} <br>
+                <strong>Graduated:</strong> ${student.isGraduated} <br>
+            `;
+
+            const typesDiv = document.createElement("div");
+            typesDiv.innerHTML = `
+                <strong>Data Types:</strong> <br>
+                name: ${typeof student.name} <br>
+                age: ${typeof student.age} <br>
+                gpa: ${typeof student.gpa} <br>
+                isGraduated: ${typeof student.isGraduated} <br>
+            `;
+            studentDiv.appendChild(typesDiv);
+
+            let gpaStatus = "";
+            if (student.gpa < 0 || student.gpa > 100) {
+                gpaStatus = "Invalid GPA";
+            } else if (student.gpa >= 90) {
+                gpaStatus = "Excellent";
+            } else if (student.gpa >= 70 && student.gpa <= 89) {
+                gpaStatus = "Good";
+            } else if (student.gpa < 70) {
+                gpaStatus = "Fail";
+            }
+
+            const gpaDiv = document.createElement("div");
+            gpaDiv.innerHTML = `<strong>GPA Status:</strong> ${gpaStatus}`;
+            studentDiv.appendChild(gpaDiv);
+
+            container.appendChild(studentDiv);
+
+            if (student.gpa > highestGPA) {
+                highestGPA = student.gpa;
+                studentDiv.classList.add("top");
+                const topDiv = document.createElement("div");
+                topDiv.innerHTML = "<strong>Top student found</strong>";
+                studentDiv.appendChild(topDiv);
+                break;
+            }
+        }
+    </script>
+</body>
+
+</html>
